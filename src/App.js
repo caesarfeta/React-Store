@@ -5,27 +5,40 @@ import _ from 'lodash';
 import {addToCart} from './actions';
 function Product(p){
   const dispatch = useDispatch();
-  return (
-    <tr key={ p.itm.id }>
-      <td>{ p.itm.name }</td>
-      <td className={ p.itm.sale_price!=null?"strike":"" } >
-      { p.itm.price }
-      </td>
-      <td>{ p.itm.sale_price }</td>
-      <td>{ p.itm.max_quant }</td>
-      <td>
-        <button onClick={()=>dispatch(addToCart(p.itm))}>Buy</button>
-      </td>
-    </tr>
-  )
+  return <tr key={ p.itm.id }>
+    <td>{ p.itm.name }</td>
+    <td className={ p.itm.sale_price!=null?"strike":"" } >
+    { p.itm.price }
+    </td>
+    <td>{ p.itm.sale_price }</td>
+    <td>{ p.itm.max_quant }</td>
+    <td>
+      <button onClick={()=>dispatch(addToCart(p.itm))}>Buy</button>
+    </td>
+  </tr>
+}
+function CartItem(p){
+  return <tr>
+    <td>p.itm[0]</td>
+    <td>p.itm[1]</td>
+  </tr>
 }
 function Cart(){
   const counter = useSelector(state=>state.counter)
-  return <h1>Cart: {counter}</h1>
+  const cart = useSelector(state=>state.cart)
+  var trs = _.map(cart,function(itm,i){
+    return <CartItem itm={itm} key={i}/>
+  })
+  return <div>
+    <h1>Cart: {counter}</h1>
+    <table>
+      <tbody>{ trs }</tbody>
+    </table>
+  </div>
 }
 function ListProducts(){
   const products = useSelector(state=>state.products)
-  var trs = _.map(products,function(itm,i){
+  var trs = _.map(products,function(itm){
     return <Product itm={itm} key={itm.id}/>
   })
   return <div>
