@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import {useSelector,useDispatch} from "react-redux";
 import _ from 'lodash';
-import {FaTimesCircle,FaTimes,FaPlus,FaShoppingCart} from 'react-icons/fa';
+import {FaTimesCircle,FaTimes,FaPlus,FaShoppingCart,FaCartPlus} from 'react-icons/fa';
 import {addToCart,rmFromCart,itmN,itmNValid} from './actions';
 function Product(p){
   const cart = useSelector(state=>state.cart);
@@ -12,10 +12,10 @@ function Product(p){
   return <tr key={ p.itm.id }>
     <td>{ p.itm.name }</td>
     <td className={ p.itm.sale_price!=null?"strike":"" }>${ p.itm.price }</td>
-    <td>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" || "None" }</td>
-    <td>{ p.itm.max_quant || "None" }</td>
+    <td className={ p.itm.sale_price === null ? "math":"" }>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" || "None" }</td>
+    <td className={ p.itm.max_quant === null ? "math":"" }>{ p.itm.max_quant || "None" }</td>
     <td>
-      <button disabled={ disable } onClick={()=>dispatch(addToCart(p.itm))}>Buy <FaShoppingCart /></button>
+      <button disabled={ disable } onClick={()=>dispatch(addToCart(p.itm))}>Buy <FaCartPlus /></button>
     </td>
   </tr>
 }
@@ -50,11 +50,11 @@ function Cart(){
     <hr />
     <table>
       <tbody>
-      <tr><td className="ar">Subtotal</td><td>${(cart.subtotal).toFixed(2)}</td></tr>
+      <tr><td className="ar">Subtotal</td><td className="ar">${(cart.subtotal).toFixed(2)}</td></tr>
       <tr><td className="ar">Tax @ {(cart.taxrate*100).toFixed(1)+"%"}</td>
-        <td><FaPlus className="math"/>${(cart.tax).toFixed(2)}</td>
+        <td className="ar"><FaPlus className="math"/>${(cart.tax).toFixed(2)}</td>
       </tr>
-      <tr><td className="ar">Total</td><td className="bold">${(cart.total).toFixed(2)}</td></tr>
+      <tr><td className="ar">Total</td><td className="bold ar">${(cart.total).toFixed(2)}</td></tr>
       </tbody>
     </table>
   </div>
