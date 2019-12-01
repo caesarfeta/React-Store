@@ -28,6 +28,7 @@ function CartItem(p){
       <FaTimes className="math"/>
       <input type="number"
               min="1"
+              max={p.itm[0].max_quant}
               value={p.itm[1]}
               onChange={e=>dispatch(itmN([p.itm,e.target.value]))}
               onBlur={e=>dispatch(itmNValid([p.itm,e.target.value]))}
@@ -49,9 +50,9 @@ function Cart(){
     <hr />
     <table>
       <tbody>
-      <tr><td>Subtotal:</td><td>${(cart.subtotal).toFixed(2)}</td></tr>
-      <tr><td>Tax @ {(cart.taxrate*100).toFixed(1)+"%"}:</td><td>${(cart.tax).toFixed(2)}</td></tr>
-      <tr><td>Total:</td><td>${(cart.total).toFixed(2)}</td></tr>
+      <tr><td className="ar">Subtotal</td><td>${(cart.subtotal).toFixed(2)}</td></tr>
+      <tr><td className="ar">Tax @ {(cart.taxrate*100).toFixed(1)+"%"}</td><td>${(cart.tax).toFixed(2)}</td></tr>
+      <tr><td className="ar">Total</td><td>${(cart.total).toFixed(2)}</td></tr>
       </tbody>
     </table>
   </div>
