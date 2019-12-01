@@ -33,8 +33,11 @@ function CartItem(p){
               onBlur={e=>dispatch(itmNValid([p.itm,e.target.value]))}
         />
     </td>
+    <td className="ar">
+      ${(p.itm[0].cart_price*p.itm[1]).toFixed(2)}
+    </td>
     <td>
-      ${(p.itm[0].cart_price*p.itm[1]).toFixed(2)}<FaTimesCircle className="math red" onClick={()=>dispatch(rmFromCart(p.itm))}/>
+      <FaTimesCircle className="math red" onClick={()=>dispatch(rmFromCart(p.itm))}/>
     </td>
   </tr>
 }
