@@ -80,3 +80,6 @@ button:disabled {
 .bold {
   font-weight:bold;
 }
+.fr {
+  float:right;
+}

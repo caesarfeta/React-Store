@@ -15,16 +15,15 @@ function Product(p){
     <td className={ p.itm.sale_price === null ? "math":"" }>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" || "None" }</td>
     <td className={ p.itm.max_quant === null ? "math":"" }>{ p.itm.max_quant || "None" }</td>
     <td>
-      <button disabled={ disable } onClick={()=>dispatch(addToCart(p.itm))}>Buy <FaCartPlus /></button>
+      <button disabled={ disable } onClick={()=>dispatch(addToCart(p.itm))}>Add <FaCartPlus /></button>
     </td>
   </tr>
 }
 function CartItem(p){
   const dispatch = useDispatch();
   return <tr>
-    <td>{ p.itm[0].name }</td>
     <td className="ar">
-      ${ p.itm[0].cart_price }
+      { p.itm[0].name }
       <FaTimes className="math"/>
       <input type="number"
               min="1"
@@ -34,7 +33,9 @@ function CartItem(p){
               onBlur={e=>dispatch(itmNValid([p.itm,e.target.value]))}
         />
     </td>
-    <td><FaTimesCircle className="math red" onClick={()=>dispatch(rmFromCart(p.itm))}/></td>
+    <td>
+      ${(p.itm[0].cart_price*p.itm[1]).toFixed(2)}<FaTimesCircle className="math red" onClick={()=>dispatch(rmFromCart(p.itm))}/>
+    </td>
   </tr>
 }
 function Cart(){
@@ -48,7 +49,7 @@ function Cart(){
       <tbody>{ itms }</tbody>
     </table>
     <hr />
-    <table>
+    <table className="fr">
       <tbody>
       <tr><td className="ar">Subtotal</td><td className="ar">${(cart.subtotal).toFixed(2)}</td></tr>
       <tr><td className="ar">Tax @ {(cart.taxrate*100).toFixed(1)+"%"}</td>
