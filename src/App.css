@@ -42,3 +42,16 @@
   background-color: #4CAF50;
   color: white;
 }
+#list {
+  margin-right: 40px;
+}
+#list, #cart {
+  float: left;
+}
+.red {
+  color: red;
+  cursor: pointer;
+}
+.hidden {
+  visibility: hidden !important;
+}

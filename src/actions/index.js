@@ -10,12 +10,6 @@ export const rmFromCart = itm => {
     payload: itm
   }
 }
-export const addToList = itm => {
-  return{
-    type: 'ADD_TO_LIST',
-    payload: itm
-  }
-}
 export const itmN = itm => {
   return{
     type: 'ITM_N',

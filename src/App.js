@@ -32,7 +32,7 @@ function CartItem(p){
               onBlur={e=>dispatch(itmNValid([p.itm,e.target.value]))}
         />
     </td>
-    <td><FaTimesCircle onClick={()=>dispatch(rmFromCart(p.itm))}/></td>
+    <td><FaTimesCircle className="red" onClick={()=>dispatch(rmFromCart(p.itm))}/></td>
   </tr>
 }
 function Cart(){
@@ -40,11 +40,14 @@ function Cart(){
   var itms = _.map(cart.itms,function(itm,i){
     return <CartItem itm={itm} key={i}/>
   })
-  return <div>
-    <h1>Cart</h1>
+  return <div id="cart" className={itms.length>0?"":"hidden"}>
+    <h3>Cart</h3>
+    <table>
+      <tbody>{ itms }</tbody>
+    </table>
+    <hr />
     <table>
       <tbody>
-      { itms }
       <tr><td>Subtotal:</td><td>${(cart.subtotal).toFixed(2)}</td></tr>
       <tr><td>Tax @ {(cart.taxrate*100).toFixed(1)+"%"}:</td><td>${(cart.tax).toFixed(2)}</td></tr>
       <tr><td>Total:</td><td>${(cart.total).toFixed(2)}</td></tr>
@@ -52,13 +55,13 @@ function Cart(){
     </table>
   </div>
 }
-function ListProducts(){
+function List(){
   const products = useSelector(state=>state.products)
   var trs = _.map(products,function(itm){
     return <Product itm={itm} key={itm.id}/>
   })
-  return <div>
-    <h1>Products</h1>
+  return <div id="list">
+    <h3>Products</h3>
     <table>
       <thead>
         <tr>
@@ -75,8 +78,8 @@ function ListProducts(){
 function App() {
   return (
     <div id="app" className="App">
+        <List />
         <Cart />
-        <ListProducts />
     </div>
   );
 }

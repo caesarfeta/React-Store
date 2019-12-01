@@ -45,6 +45,10 @@ const cartReducer = (state={
       if ( max != null && max < action.payload[1] ){
         action.payload[0][1] = max;
       }
+      if ( action.payload[0][1]<1){
+        action.payload[0][1] = 1;
+      }
+      calcRest( state )
       return _.clone( state )
     default:
       return state
