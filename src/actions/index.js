@@ -1,8 +1,3 @@
-export const increment = () => {
-  return{
-    type: 'INCREMENT'
-  }
-}
 export const addToCart = itm => {
   return{
     type: 'ADD_TO_CART',

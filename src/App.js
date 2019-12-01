@@ -1,22 +1,18 @@
 import './App.css';
 import React from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
 import _ from 'lodash';
-import { FaMinusSquare } from 'react-icons/fa';
+import {FaMinusSquare} from 'react-icons/fa';
 import {addToCart,rmFromCart} from './actions';
 function Product(p){
   const cart = useSelector(state=>state.cart);
   const dispatch = useDispatch();
   const cartItm = _.find(cart.itms, function(o){ return o[0]===p.itm });
-  const disable = !!cartItm && 
-                  cartItm[0].max_quant != null && 
-                  cartItm[1] >= cartItm[0].max_quant;
+  const disable = !!cartItm && cartItm[0].max_quant != null && cartItm[1] >= cartItm[0].max_quant;
   return <tr key={ p.itm.id }>
     <td>{ p.itm.name }</td>
-    <td className={ p.itm.sale_price!=null?"strike":"" } >
-    { p.itm.price }
-    </td>
-    <td>{ p.itm.sale_price }</td>
+    <td className={ p.itm.sale_price!=null?"strike":"" }>${ p.itm.price }</td>
+    <td>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" }</td>
     <td>{ p.itm.max_quant }</td>
     <td>
       <button disabled={ disable } onClick={()=>dispatch(addToCart(p.itm))}>Buy</button>
