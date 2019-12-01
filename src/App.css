@@ -64,7 +64,7 @@
 .hidden {
   visibility: hidden !important;
 }
-.math {
+.fade {
   margin:0 5px;
   color: #aaa;
 }

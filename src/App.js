@@ -12,8 +12,8 @@ function Product(p){
   return <tr key={ p.itm.id }>
     <td>{ p.itm.name }</td>
     <td className={ p.itm.sale_price!=null?"strike":"" }>${ p.itm.price }</td>
-    <td className={ p.itm.sale_price === null ? "math":"" }>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" || "None" }</td>
-    <td className={ p.itm.max_quant === null ? "math":"" }>{ p.itm.max_quant || "None" }</td>
+    <td className={ p.itm.sale_price === null ? "fade":"" }>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" || "None" }</td>
+    <td className={ p.itm.max_quant === null ? "fade":"" }>{ p.itm.max_quant || "None" }</td>
     <td>
       <button disabled={ disable } onClick={()=>dispatch(addToCart(p.itm))}>Add <FaCartPlus /></button>
     </td>
@@ -24,7 +24,7 @@ function CartItem(p){
   return <tr>
     <td className="ar">
       { p.itm[0].name }
-      <FaTimes className="math"/>
+      <FaTimes className="fade"/>
       <input type="number"
               min="1"
               max={p.itm[0].max_quant}
@@ -37,7 +37,7 @@ function CartItem(p){
       ${(p.itm[0].cart_price*p.itm[1]).toFixed(2)}
     </td>
     <td>
-      <FaTimesCircle className="math red" onClick={()=>dispatch(rmFromCart(p.itm))}/>
+      <FaTimesCircle className="fade red" onClick={()=>dispatch(rmFromCart(p.itm))}/>
     </td>
   </tr>
 }
@@ -56,7 +56,7 @@ function Cart(){
       <tbody>
       <tr><td className="ar">Subtotal</td><td className="ar">${(cart.subtotal).toFixed(2)}</td></tr>
       <tr><td className="ar">Tax @ {(cart.taxrate*100).toFixed(1)+"%"}</td>
-        <td className="ar"><FaPlus className="math"/>${(cart.tax).toFixed(2)}</td>
+        <td className="ar"><FaPlus className="fade"/>${(cart.tax).toFixed(2)}</td>
       </tr>
       <tr><td className="ar">Total</td><td className="bold ar">${(cart.total).toFixed(2)}</td></tr>
       </tbody>
