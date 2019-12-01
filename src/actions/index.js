@@ -9,6 +9,12 @@ export const addToCart = itm => {
     payload: itm
   }
 }
+export const rmFromCart = itm => {
+  return{
+    type: 'RM_FROM_CART',
+    payload: itm
+  }
+}
 export const addToList = itm => {
   return{
     type: 'ADD_TO_LIST',

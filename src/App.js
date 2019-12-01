@@ -2,7 +2,8 @@ import './App.css';
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import _ from 'lodash';
-import {addToCart} from './actions';
+import { FaMinusSquare } from 'react-icons/fa';
+import {addToCart,rmFromCart} from './actions';
 function Product(p){
   const dispatch = useDispatch();
   return <tr key={ p.itm.id }>
@@ -18,21 +19,29 @@ function Product(p){
   </tr>
 }
 function CartItem(p){
+  const dispatch = useDispatch();
   return <tr>
-    <td>p.itm[0]</td>
-    <td>p.itm[1]</td>
+    <td>{ p.itm[0].name }</td>
+    <td>@{ p.itm[0].cart_price }</td>
+    <td>x{ p.itm[1] }</td>
+    <td><FaMinusSquare onClick={()=>dispatch(rmFromCart(p.itm))}/></td>
+    <td>{ p.itm[0].cart_price*p.itm[1] }</td>
   </tr>
 }
 function Cart(){
-  const counter = useSelector(state=>state.counter)
   const cart = useSelector(state=>state.cart)
-  var trs = _.map(cart,function(itm,i){
+  var itms = _.map(cart.itms,function(itm,i){
     return <CartItem itm={itm} key={i}/>
   })
   return <div>
-    <h1>Cart: {counter}</h1>
+    <h1>Cart</h1>
     <table>
-      <tbody>{ trs }</tbody>
+      <tbody>
+      { itms }
+      <tr><td>Subtotal:</td><td>{(cart.subtotal).toFixed(2)}</td></tr>
+      <tr><td>Tax @ {(cart.taxrate*100).toFixed(1)+"%"}:</td><td>{(cart.tax).toFixed(2)}</td></tr>
+      <tr><td>Total:</td><td>{(cart.total).toFixed(2)}</td></tr>
+      </tbody>
     </table>
   </div>
 }

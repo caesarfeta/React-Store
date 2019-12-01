@@ -8,15 +8,14 @@ const productReducer = (state= _.map(
       [ 'Lacrosse Stick', 39.99, null, null]
     ], 
     function( itm, i ){
+      const cart_price = (itm[2]!=null)?itm[2]:itm[1]
       return {
         id: i, // for simplicity's sake
         name:itm[0],
         price:itm[1],
         sale_price:itm[2],
         max_quant:itm[3],
-        cart_price: function(n){
-          return n*(itm[2]!=null)?itm[2]:itm[1]
-        }
+        cart_price: cart_price
       }
     }
   ),action) => {
