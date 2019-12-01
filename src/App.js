@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import {useSelector,useDispatch} from "react-redux";
 import _ from 'lodash';
-import {FaTimesCircle} from 'react-icons/fa';
+import {FaTimesCircle,FaTimes} from 'react-icons/fa';
 import {addToCart,rmFromCart,itmN,itmNValid} from './actions';
 function Product(p){
   const cart = useSelector(state=>state.cart);
@@ -23,9 +23,10 @@ function CartItem(p){
   const dispatch = useDispatch();
   return <tr>
     <td>{ p.itm[0].name }</td>
-    <td>@${ p.itm[0].cart_price }</td>
-    <td>
-      x<input type="number"
+    <td className="ar">
+      ${ p.itm[0].cart_price }
+      <FaTimes className="math"/>
+      <input type="number"
               min="1"
               value={p.itm[1]}
               onChange={e=>dispatch(itmN([p.itm,e.target.value]))}

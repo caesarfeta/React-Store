@@ -39,8 +39,9 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4CAF50;
-  color: white;
+}
+#app td.ar {
+  text-align: right;
 }
 #list {
   margin-right: 40px;
@@ -48,10 +49,19 @@
 #list, #cart {
   float: left;
 }
+#app input {
+  padding:5px;
+  width: 60px;
+  font-size: 14px;
+}
 .red {
   color: red;
   cursor: pointer;
 }
 .hidden {
   visibility: hidden !important;
+}
+.math {
+  margin:0 5px;
+  color: #aaa;
 }
