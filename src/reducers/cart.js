@@ -13,7 +13,7 @@ const cartReducer = (state={
     taxrate:.072,
     total: 0
   },action) => {
-  switch(action.type){
+  switch (action.type){
     case 'ADD_TO_CART':
       var itm = _.find( state.itms, function(o){
         return o[0]===action.payload
@@ -29,15 +29,22 @@ const cartReducer = (state={
       calcRest( state )
       return _.clone( state )
     case 'RM_FROM_CART':
-      if (action.payload[1]===1){
-        _.remove(state.itms,function(o){
-          return o===action.payload
-        })
-      }
-      else {
-        action.payload[1]--
-      }
+      _.remove(state.itms,function(o){
+        return o===action.payload
+      })
       calcRest( state )
+      return _.clone( state )
+    case "ITM_N":
+      var cartItm = action.payload[0];
+      var n = action.payload[1];
+      cartItm[1]=n;
+      calcRest( state )
+      return _.clone( state )
+    case "ITM_N_VALID":
+      var max = action.payload[0][0].max_quant;
+      if ( max != null && max < action.payload[1] ){
+        action.payload[0][1] = max;
+      }
       return _.clone( state )
     default:
       return state

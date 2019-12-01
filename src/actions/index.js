@@ -16,3 +16,15 @@ export const addToList = itm => {
     payload: itm
   }
 }
+export const itmN = itm => {
+  return{
+    type: 'ITM_N',
+    payload: itm
+  }
+}
+export const itmNValid = itm => {
+  return{
+    type: 'ITM_N_VALID',
+    payload: itm
+  }
+}

@@ -2,8 +2,8 @@ import './App.css';
 import React from 'react';
 import {useSelector,useDispatch} from "react-redux";
 import _ from 'lodash';
-import {FaMinusSquare} from 'react-icons/fa';
-import {addToCart,rmFromCart} from './actions';
+import {FaTimesCircle} from 'react-icons/fa';
+import {addToCart,rmFromCart,itmN,itmNValid} from './actions';
 function Product(p){
   const cart = useSelector(state=>state.cart);
   const dispatch = useDispatch();
@@ -12,8 +12,8 @@ function Product(p){
   return <tr key={ p.itm.id }>
     <td>{ p.itm.name }</td>
     <td className={ p.itm.sale_price!=null?"strike":"" }>${ p.itm.price }</td>
-    <td>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" }</td>
-    <td>{ p.itm.max_quant }</td>
+    <td>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" || "None" }</td>
+    <td>{ p.itm.max_quant || "None" }</td>
     <td>
       <button disabled={ disable } onClick={()=>dispatch(addToCart(p.itm))}>Buy</button>
     </td>
@@ -24,9 +24,15 @@ function CartItem(p){
   return <tr>
     <td>{ p.itm[0].name }</td>
     <td>@${ p.itm[0].cart_price }</td>
-    <td>x{ p.itm[1] }</td>
-    <td><FaMinusSquare onClick={()=>dispatch(rmFromCart(p.itm))}/></td>
-    <td>${(p.itm[0].cart_price*p.itm[1]).toFixed(2) }</td>
+    <td>
+      x<input type="number"
+              min="1"
+              value={p.itm[1]}
+              onChange={e=>dispatch(itmN([p.itm,e.target.value]))}
+              onBlur={e=>dispatch(itmNValid([p.itm,e.target.value]))}
+        />
+    </td>
+    <td><FaTimesCircle onClick={()=>dispatch(rmFromCart(p.itm))}/></td>
   </tr>
 }
 function Cart(){
@@ -66,15 +72,11 @@ function ListProducts(){
     </table>
   </div>
 }
-function AddProduct(){
-  return <h1>AddProduct</h1>
-}
 function App() {
   return (
-    <div className="App">
+    <div id="app" className="App">
         <Cart />
         <ListProducts />
-        <AddProduct />
     </div>
   );
 }

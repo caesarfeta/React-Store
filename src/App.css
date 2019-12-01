@@ -20,3 +20,25 @@
 .strike {
   text-decoration: line-through
 }
+#app {
+  border-collapse: collapse;
+  width: 100%;
+}
+#app td, #app th {
+  border: 0;
+  padding: 8px;
+  margin: 0;
+}
+#app tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+#app tr:hover {
+  background-color: #ddd;
+}
+#app th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
