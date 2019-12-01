@@ -5,7 +5,12 @@ import _ from 'lodash';
 import { FaMinusSquare } from 'react-icons/fa';
 import {addToCart,rmFromCart} from './actions';
 function Product(p){
+  const cart = useSelector(state=>state.cart);
   const dispatch = useDispatch();
+  const cartItm = _.find(cart.itms, function(o){ return o[0]===p.itm });
+  const disable = !!cartItm && 
+                  cartItm[0].max_quant != null && 
+                  cartItm[1] >= cartItm[0].max_quant;
   return <tr key={ p.itm.id }>
     <td>{ p.itm.name }</td>
     <td className={ p.itm.sale_price!=null?"strike":"" } >
@@ -14,7 +19,7 @@ function Product(p){
     <td>{ p.itm.sale_price }</td>
     <td>{ p.itm.max_quant }</td>
     <td>
-      <button onClick={()=>dispatch(addToCart(p.itm))}>Buy</button>
+      <button disabled={ disable } onClick={()=>dispatch(addToCart(p.itm))}>Buy</button>
     </td>
   </tr>
 }
@@ -22,10 +27,10 @@ function CartItem(p){
   const dispatch = useDispatch();
   return <tr>
     <td>{ p.itm[0].name }</td>
-    <td>@{ p.itm[0].cart_price }</td>
+    <td>@${ p.itm[0].cart_price }</td>
     <td>x{ p.itm[1] }</td>
     <td><FaMinusSquare onClick={()=>dispatch(rmFromCart(p.itm))}/></td>
-    <td>{ p.itm[0].cart_price*p.itm[1] }</td>
+    <td>${(p.itm[0].cart_price*p.itm[1]).toFixed(2) }</td>
   </tr>
 }
 function Cart(){
@@ -38,9 +43,9 @@ function Cart(){
     <table>
       <tbody>
       { itms }
-      <tr><td>Subtotal:</td><td>{(cart.subtotal).toFixed(2)}</td></tr>
-      <tr><td>Tax @ {(cart.taxrate*100).toFixed(1)+"%"}:</td><td>{(cart.tax).toFixed(2)}</td></tr>
-      <tr><td>Total:</td><td>{(cart.total).toFixed(2)}</td></tr>
+      <tr><td>Subtotal:</td><td>${(cart.subtotal).toFixed(2)}</td></tr>
+      <tr><td>Tax @ {(cart.taxrate*100).toFixed(1)+"%"}:</td><td>${(cart.tax).toFixed(2)}</td></tr>
+      <tr><td>Total:</td><td>${(cart.total).toFixed(2)}</td></tr>
       </tbody>
     </table>
   </div>

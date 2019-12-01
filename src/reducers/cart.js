@@ -15,12 +15,13 @@ const cartReducer = (state={
   },action) => {
   switch(action.type){
     case 'ADD_TO_CART':
-      // update item count
       var itm = _.find( state.itms, function(o){
         return o[0]===action.payload
       })
-      if ( !!itm ){
-        itm[1]++
+      if (!!itm){
+        if (itm[1]<action.payload.max_quant||action.payload.max_quant==null){
+          itm[1]++
+        }
       }
       else {
         state.itms.push([action.payload,1])
