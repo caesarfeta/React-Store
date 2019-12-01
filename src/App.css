@@ -35,6 +35,9 @@
 #app tr:hover {
   background-color: #ddd;
 }
+#app thead tr:hover {
+  background-color:white;
+}
 #app th {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -54,7 +57,7 @@
   width: 60px;
   font-size: 14px;
 }
-.red {
+.red:hover {
   color: red;
   cursor: pointer;
 }
@@ -64,4 +67,16 @@
 .math {
   margin:0 5px;
   color: #aaa;
+}
+button {
+  padding: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+button:disabled {
+  cursor:default;
+  color: #ddd;
+}
+.bold {
+  font-weight:bold;
 }
