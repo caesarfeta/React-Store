@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
-import {useSelector,useDispatch} from "react-redux";
+import ReactMarkdown from 'react-markdown';
+import {useSelector,useDispatch} from 'react-redux';
 import _ from 'lodash';
 import {FaTimesCircle,FaTimes,FaPlus,FaShoppingCart,FaCartPlus} from 'react-icons/fa';
 import {addToCart,rmFromCart,itmN,itmNValid} from './actions';
@@ -64,8 +65,8 @@ function Cart(){
   </div>
 }
 function List(){
-  const products = useSelector(state=>state.products)
-  var trs = _.map(products,function(itm){
+  const prods = useSelector(state=>state.products)
+  const trs = _.map(prods,function(itm){
     return <Product itm={itm} key={itm.id}/>
   })
   return <div id="list">
@@ -83,9 +84,27 @@ function List(){
     </table>
   </div>
 }
+function Header(){
+  return <h1>LAPLASTX</h1>
+}
+function Prod(p){
+  return <div className="prod">
+    <h2>{p.itm.name}</h2>
+    <img src={p.itm.thumb}/>
+    <ReactMarkdown source={p.itm.copy} />
+  </div>
+}
+function Browse(){
+  const prods = _.map( useSelector(state=>state.products),function(itm){
+    return <Prod itm={itm} key={itm.id}/>
+  })
+  return prods
+}
 function App() {
   return (
     <div id="app" className="App">
+        <Header />
+        <Browse />
         <List />
         <Cart />
     </div>
