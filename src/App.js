@@ -5,6 +5,7 @@ import {useSelector,useDispatch} from 'react-redux';
 import _ from 'lodash';
 import {FaTimesCircle,FaTimes,FaPlus,FaShoppingCart,FaCartPlus} from 'react-icons/fa';
 import {addToCart,rmFromCart,itmN,itmNValid} from './actions';
+import 'bootstrap/dist/css/bootstrap.min.css'
 function Product(p){
   const cart = useSelector(state=>state.cart);
   const dispatch = useDispatch();
@@ -90,7 +91,9 @@ function Header(){
 function Prod(p){
   return <div className="prod">
     <h2>{p.itm.name}</h2>
-    <img src={p.itm.thumb}/>
+    <img src={p.itm.splash}/>
+    <img src={p.itm.logo}/>
+    <img src={p.itm.figure}/>
     <ReactMarkdown source={p.itm.copy} />
   </div>
 }

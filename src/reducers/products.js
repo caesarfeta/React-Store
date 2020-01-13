@@ -2,26 +2,19 @@ import _ from 'lodash';
 const productReducer = (state= _.map(
     [
       [ 
-        'Richie Rotchild',
+        'Alpha7',
         19.99,
         null,
         null,
-        'img/cupie.png',
-        'img/cupie.png',
-        '# This is a header\n\nAnd this is a paragraph'
-      ],
-      [ 
-        'Queenie B',
-        29.99,
-        19.99,
-        null,
-        'img/chaddie_brown.jpg',
-        'img/chaddie_brown.jpg',
-        '# This is a header\n\nAnd this is a paragraph'
-        ]
+        'alpha7/logo',
+        'alpha7/splash',
+        'alpha7/figure',
+        '# Buy this figure! \n\n BAM! ZOW! BANG!'
+      ]
     ], 
     function( itm, i ){
       const cart_price = (itm[2]!=null)?itm[2]:itm[1]
+      function pre(i){ return 'img/'+i+'.png' }
       return {
         id: i, // for simplicity's sake
         name:itm[0],
@@ -29,8 +22,10 @@ const productReducer = (state= _.map(
         sale_price:itm[2],
         max_quant:itm[3],
         cart_price: cart_price,
-        thumb:itm[4],
-        copy:itm[6]
+        logo:pre(itm[4]),
+        splash:pre(itm[5]),
+        figure:pre(itm[6]),
+        copy:itm[7]
       }
     }
   ),action) => {
