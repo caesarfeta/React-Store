@@ -57,6 +57,12 @@
   width: 60px;
   font-size: 14px;
 }
+.col img {
+  width: 100%;
+}
+img.fig {
+  max-height:500px;
+}
 .red:hover {
   color: red;
   cursor: pointer;
