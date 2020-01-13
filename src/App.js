@@ -1,165 +1,165 @@
-import './App.css';
-import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import {useSelector,useDispatch} from 'react-redux';
-import _ from 'lodash';
-import {FaTimesCircle,FaTimes,FaPlus,FaShoppingCart,FaCartPlus} from 'react-icons/fa';
-import {addToCart,rmFromCart,itmN,itmNValid} from './actions';
-import { Container, Row, Col, Jumbotron, Alert, Button, Modal, Navbar } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css'
-function Header(){
-  const about="## The SOURCE for STRANGE & BEAUTIFUL \n\n## 3D-printable FIGURES & TOYS!";
-  return <>
-  <Row>
-    <Col>
-    <h1>LAPLASTX</h1>
-    <ReactMarkdown source={about} />
-    </Col>
-  </Row>
-  </>
-}
-function Browse(){
-  const prods = _.map( useSelector(state=>state.products),function(itm){
-    return <Prod itm={itm} key={itm.id}/>
-  })
-  return <Container>{prods}</Container>
-}
-function Prod(p){
-  const cart = useSelector(state=>state.cart);
-  const dispatch = useDispatch();
-  const cartItm = _.find(cart.itms, function(o){ return o[0]===p.itm });
-  const disable = !!cartItm && cartItm[0].max_quant != null && cartItm[1] >= cartItm[0].max_quant;
-  return <>
-  <Jumbotron>
-    <Row>
-      <Col><img src={p.itm.logo}/></Col>
-    </Row>
-    <Row>
-      <Col><img src={p.itm.splash}/></Col>
-    </Row>
-    <Row>
-      <Col>
-        <ReactMarkdown source={p.itm.copy} />
-        <span className={ p.itm.sale_price!=null?"strike":"" }>${ p.itm.price }</span>
-        <span className={ p.itm.sale_price === null ? "fade":"" }>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" || "None" }</span>
-        <Button 
-          disabled={ disable }
-          onClick={()=>dispatch(addToCart(p.itm))}>
-            Add <FaCartPlus />
-        </Button>
-      </Col>
-      <Col><img className="fig" src={p.itm.figure}/></Col>
-    </Row>
-    <Row>
-      <Col>Designer: {p.itm.designer} | Released: {p.itm.released}</Col>
-    </Row>
-  </Jumbotron>
-  </>
-}
-function Nav(){
-  const cart = useSelector(state=>state.cart)
-  return <>
-  <Navbar bg="primary" variant="dark">
-    <Navbar.Brand>LAPLASTX</Navbar.Brand>
-    <Cart/>
-  </Navbar>
-  </>
+import React, { Component } from 'react';
+import axios from 'axios';
+
+class App extends Component {
+  // initialize our state
+  state = {
+    data: [],
+    id: 0,
+    message: null,
+    intervalIsSet: false,
+    idToDelete: null,
+    idToUpdate: null,
+    objectToUpdate: null,
+  };
+
+  // when component mounts, first thing it does is fetch all existing data in our db
+  // then we incorporate a polling logic so that we can easily see if our db has
+  // changed and implement those changes into our UI
+  componentDidMount() {
+    this.getDataFromDb();
+    if (!this.state.intervalIsSet) {
+      let interval = setInterval(this.getDataFromDb, 1000);
+      this.setState({ intervalIsSet: interval });
+    }
+  }
+
+  // never let a process live forever
+  // always kill a process everytime we are done using it
+  componentWillUnmount() {
+    if (this.state.intervalIsSet) {
+      clearInterval(this.state.intervalIsSet);
+      this.setState({ intervalIsSet: null });
+    }
+  }
+
+  // just a note, here, in the front end, we use the id key of our data object
+  // in order to identify which we want to Update or delete.
+  // for our back end, we use the object id assigned by MongoDB to modify
+  // data base entries
+
+  // our first get method that uses our backend api to
+  // fetch data from our data base
+  getDataFromDb = () => {
+    fetch('http://localhost:3001/api/getData')
+      .then((data) => data.json())
+      .then((res) => this.setState({ data: res.data }));
+  };
+
+  // our put method that uses our backend api
+  // to create new query into our data base
+  putDataToDB = (message) => {
+    let currentIds = this.state.data.map((data) => data.id);
+    let idToBeAdded = 0;
+    while (currentIds.includes(idToBeAdded)) {
+      ++idToBeAdded;
+    }
+
+    axios.post('http://localhost:3001/api/putData', {
+      id: idToBeAdded,
+      message: message,
+    });
+  };
+
+  // our delete method that uses our backend api
+  // to remove existing database information
+  deleteFromDB = (idTodelete) => {
+    parseInt(idTodelete);
+    let objIdToDelete = null;
+    this.state.data.forEach((dat) => {
+      if (dat.id == idTodelete) {
+        objIdToDelete = dat._id;
+      }
+    });
+
+    axios.delete('http://localhost:3001/api/deleteData', {
+      data: {
+        id: objIdToDelete,
+      },
+    });
+  };
+
+  // our update method that uses our backend api
+  // to overwrite existing data base information
+  updateDB = (idToUpdate, updateToApply) => {
+    let objIdToUpdate = null;
+    parseInt(idToUpdate);
+    this.state.data.forEach((dat) => {
+      if (dat.id == idToUpdate) {
+        objIdToUpdate = dat._id;
+      }
+    });
+
+    axios.post('http://localhost:3001/api/updateData', {
+      id: objIdToUpdate,
+      update: { message: updateToApply },
+    });
+  };
+
+  // here is our UI
+  // it is easy to understand their functions when you
+  // see them render into our screen
+  render() {
+    const { data } = this.state;
+    return (
+      <div>
+        <ul>
+          {data.length <= 0
+            ? 'NO DB ENTRIES YET'
+            : data.map((dat) => (
+                <li style={{ padding: '10px' }} key={data.message}>
+                  <span style={{ color: 'gray' }}> id: </span> {dat.id} <br />
+                  <span style={{ color: 'gray' }}> data: </span>
+                  {dat.message}
+                </li>
+              ))}
+        </ul>
+        <div style={{ padding: '10px' }}>
+          <input
+            type="text"
+            onChange={(e) => this.setState({ message: e.target.value })}
+            placeholder="add something in the database"
+            style={{ width: '200px' }}
+          />
+          <button onClick={() => this.putDataToDB(this.state.message)}>
+            ADD
+          </button>
+        </div>
+        <div style={{ padding: '10px' }}>
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ idToDelete: e.target.value })}
+            placeholder="put id of item to delete here"
+          />
+          <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
+            DELETE
+          </button>
+        </div>
+        <div style={{ padding: '10px' }}>
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ idToUpdate: e.target.value })}
+            placeholder="id of item to update here"
+          />
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ updateToApply: e.target.value })}
+            placeholder="put new value of the item here"
+          />
+          <button
+            onClick={() =>
+              this.updateDB(this.state.idToUpdate, this.state.updateToApply)
+            }
+          >
+            UPDATE
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 
-function Cart(){
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const cart = useSelector(state=>state.cart)
-  var itms = _.map(cart.itms,function(itm,i){
-    return <CartItem itm={itm} key={i}/>
-  })
-  return <>
-  <Button
-    size="lg"
-    className="float-sm-right"
-    onClick={handleShow}>
-      <FaShoppingCart />
-      <span>{ cart.itms.length || null }</span>
-  </Button>
-  <Modal id="cart" show={show} centered>
-  <Modal.Header>
-    <Modal.Title><FaShoppingCart />Cart</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-      <table>
-        <tbody>{ itms }</tbody>
-      </table>
-      <hr />
-      <table className="fr">
-        <tbody>
-        <tr>
-          <td className="ar">Subtotal</td>
-          <td className="ar">${(cart.subtotal).toFixed(2)}</td>
-        </tr>
-        <tr>
-          <td className="ar">Tax @ {(cart.taxrate*100).toFixed(1)+"%"}</td>
-          <td className="ar"><FaPlus className="fade"/>${(cart.tax).toFixed(2)}</td>
-        </tr>
-        <tr>
-          <td className="ar">Total</td><td className="bold ar">${(cart.total).toFixed(2)}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <Row>
-      <Col>
-        <Button 
-          variant="light"
-          onClick={handleClose}>
-          Close
-        </Button>
-        <Button>
-          Checkout
-        </Button>
-      </Col>
-    </Row>
-    </Modal.Body>
-  </Modal>
-  </>
-}
-function CartItem(p){
-  const dispatch = useDispatch();
-  return <tr>
-    <td className="ar">
-      { p.itm[0].name }
-      <FaTimes/>
-      <input type="number"
-              min="1"
-              max={p.itm[0].max_quant}
-              value={p.itm[1]}
-              onChange={e=>dispatch(itmN([p.itm,e.target.value]))}
-              onBlur={e=>dispatch(itmNValid([p.itm,e.target.value]))}
-        />
-    </td>
-    <td className="ar">
-      ${(p.itm[0].cart_price*p.itm[1]).toFixed(2)}
-    </td>
-    <td>
-      <FaTimesCircle className="red" onClick={()=>dispatch(rmFromCart(p.itm))}/>
-    </td>
-  </tr>
-}
-function Footer(){
-  return <>
-    <div> &#169; { new Date().getFullYear() } LAPLASTX </div>
-  </>
-}
-function App() {
-  return (
-    <div id="app" className="App">
-        <Nav />
-        <Container fluid>
-          <Header />
-          <Browse />
-        </Container>
-        <Footer />
-    </div>
-  );
-}
 export default App;

@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.19.1",
     "bootstrap": "^4.4.1",
+    "concurrently": "^5.0.2",
     "lodash": "^4.17.15",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
@@ -16,11 +17,12 @@
     "redux": "^4.0.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"cd backend && node server.js\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -35,5 +37,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caesarfeta/React-Store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/caesarfeta/React-Store/issues"
+  },
+  "homepage": "https://github.com/caesarfeta/React-Store#readme"
 }
