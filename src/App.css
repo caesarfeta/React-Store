@@ -82,8 +82,3 @@ button:disabled {
 .jumbotron {
   padding: 2rem 2rem !important;
 }
-.navbar {
-  z-index: 100 !important;
-  width: 100% !important;
-  position: fixed !important;
-}

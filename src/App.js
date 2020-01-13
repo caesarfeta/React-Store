@@ -10,10 +10,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 function Header(){
   const about="## The SOURCE for STRANGE & BEAUTIFUL \n\n## 3D-printable FIGURES & TOYS!";
   return <>
-  <Container>
+  <Row>
+    <Col>
     <h1>LAPLASTX</h1>
     <ReactMarkdown source={about} />
-  </Container>
+    </Col>
+  </Row>
   </>
 }
 function Browse(){
@@ -105,15 +107,19 @@ function Cart(){
         </tr>
       </tbody>
     </table>
-    </Modal.Body>
-    <Button 
+    <Row>
+      <Col>
+        <Button 
           variant="light"
           onClick={handleClose}>
           Close
-    </Button>
-    <Button>
+        </Button>
+        <Button>
           Checkout
-    </Button>
+        </Button>
+      </Col>
+    </Row>
+    </Modal.Body>
   </Modal>
   </>
 }
@@ -148,8 +154,10 @@ function App() {
   return (
     <div id="app" className="App">
         <Nav />
-        <Header />
-        <Browse />
+        <Container fluid>
+          <Header />
+          <Browse />
+        </Container>
         <Footer />
     </div>
   );
