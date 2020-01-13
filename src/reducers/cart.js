@@ -11,7 +11,8 @@ const cartReducer = (state={
     subtotal: 0,
     tax: 0,
     taxrate:.072,
-    total: 0
+    total: 0,
+    visible:false
   },action) => {
   switch (action.type){
     case 'ADD_TO_CART':

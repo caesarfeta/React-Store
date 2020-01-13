@@ -3,9 +3,8 @@ const productReducer = (state= _.map(
     [
       [ 
         'Alpha7',
+        29.99,
         19.99,
-        null,
-        null,
         'alpha7/logo',
         'alpha7/splash',
         'alpha7/figure',
@@ -20,12 +19,13 @@ const productReducer = (state= _.map(
         name:itm[0],
         price:itm[1],
         sale_price:itm[2],
-        max_quant:itm[3],
         cart_price: cart_price,
-        logo:pre(itm[4]),
-        splash:pre(itm[5]),
-        figure:pre(itm[6]),
-        copy:itm[7]
+        logo:pre(itm[3]),
+        splash:pre(itm[4]),
+        figure:pre(itm[5]),
+        copy:itm[6],
+        designer: 'Adam Tavares',
+        released: new Date( 2020,1,14 ).toISOString().split('T')[0]
       }
     }
   ),action) => {
