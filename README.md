@@ -7,3 +7,5 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 https://apps.shopify.com/shapeways-fulfillment
 https://medium.com/dailyjs/how-to-build-and-deploy-a-full-stack-react-app-4adc46607604
+https://developers.shopify.com/tutorials/build-a-shopify-app-with-node-and-react
+https://apps.shopify.com/shapeways-fulfillment
