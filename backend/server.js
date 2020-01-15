@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config()
+const passport = require("passport");
+const users = require("./routes/users");
 
 // DB connection
 
@@ -18,6 +20,11 @@ const connection = mongoose.connection;
 connection.once('open', ()=>{
   console.log("DB OK!")
 })
+
+// Passport middleware
+app.use(passport.initialize());
+require("./passport")(passport);
+app.use("./routes/users", users);
 
 // App
 const exercisesRouter = require('./routes/exercises');
