@@ -5,20 +5,17 @@ export default class Register extends Component{
   constructor(){
     super();
     this.state={
-      name:'',
       email:'',
       password:'',
       password2:''
     }
   }
   onChange = e => {
-    console.log( e )
     this.setState({ [e.target.id]: e.target.value });
   }
   onSubmit = e => {
     e.preventDefault();
     const user={
-      name: this.state.name,
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password
@@ -30,20 +27,10 @@ export default class Register extends Component{
   render(){
     return (
       <>
-        <h2>Register</h2>
+        <p>Already have an account? <a href="/login">Login</a></p>
         <Row>
         <Col sm={12} md={6}>
         <Form onSubmit={this.onSubmit}>
-          <Form.Group>
-            <Form.Label>Name: </Form.Label>
-            <Form.Control
-              type="text"
-              required
-              id="name"
-              value={this.state.name}
-              onChange={this.onChange}
-            />
-          </Form.Group>
           <Form.Group>
             <Form.Label>Email: </Form.Label>
             <Form.Control
@@ -75,7 +62,7 @@ export default class Register extends Component{
             />
           </Form.Group>
           <Form.Group>
-              <Button type="submit">Create User</Button>
+              <Button type="submit">Create Account</Button>
           </Form.Group>
         </Form>
         </Col>

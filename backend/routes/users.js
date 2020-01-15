@@ -21,7 +21,6 @@ router.post("/register",(req,res)=>{
     }
     else {
       const newUser = new User({
-        name: req.body.name,
         email: req.body.email,
         password: req.body.password
       });
@@ -42,7 +41,7 @@ router.post("/register",(req,res)=>{
 // @route POST users/login
 // @desc Login user and return JWT token
 // @access Public
-router.post("/login", (req, res) => {
+router.post("/login",(req,res)=>{
   const { err, isValid } = validateLoginInput(req.body);
   if (!isValid) {
     return res.status(400).json(err);

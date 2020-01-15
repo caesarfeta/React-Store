@@ -4,43 +4,38 @@ import axios from 'axios';
 export default class Login extends Component{
   constructor(props){
     super(props);
-    this.onChangeUsername=this.onChangeUsername.bind(this);
-    this.onSubmit=this.onSubmit.bind(this);
     this.state={
-      username:''
+      email:'',
+      password:''
     }
   }
-  onChangeUsername(e){
-    this.setState({
-      username:e.target.value
-    });
+  onChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
   }
-  onSubmit(e){
+  onSubmit = e => {
     e.preventDefault();
     const user={
-      username: this.state.username
+      email: this.state.email,
+      password: this.state.password
     };
     axios.post('http://localhost:3001/users/login',user)
       .then(res=>console.log(res.data))
       .catch(err=>console.log(err));
-    this.setState({
-      username:''
-    });
   }
   render(){
     return (
       <>
-        <h2>Login</h2>
         <Row>
         <Col sm={12} md={6}>
         <Form onSubmit={this.onSubmit}>
           <Form.Group>
-            <Form.Label>Name: </Form.Label>
+            <Form.Label>Email: </Form.Label>
             <Form.Control
-              type="text"
+              type="email"
               required
-              value={this.state.username}
-              onChange={this.onChangeUsername}
+              id="email"
+              value={this.state.email}
+              onChange={this.onChange}
             />
           </Form.Group>
           <Form.Group>
@@ -48,6 +43,9 @@ export default class Login extends Component{
             <Form.Control
               type="password"
               required
+              id="password"
+              value={this.state.password}
+              onChange={this.onChange}
             />
           </Form.Group>
           <Form.Group>
