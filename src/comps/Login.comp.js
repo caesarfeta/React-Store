@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row, Col } from 'react-bootstrap'
 import axios from 'axios';
-export default class CreateUser extends Component{
+export default class Login extends Component{
   constructor(props){
     super(props);
     this.onChangeUsername=this.onChangeUsername.bind(this);
@@ -20,8 +20,7 @@ export default class CreateUser extends Component{
     const user={
       username: this.state.username
     };
-    console.log(user);
-    axios.post('http://localhost:3001/users/register',user)
+    axios.post('http://localhost:3001/users/login',user)
       .then(res=>console.log(res.data))
       .catch(err=>console.log(err));
     this.setState({
@@ -31,22 +30,32 @@ export default class CreateUser extends Component{
   render(){
     return (
       <>
-        <h2>Create User</h2>
+        <h2>Login</h2>
+        <Row>
+        <Col sm={12} md={6}>
         <Form onSubmit={this.onSubmit}>
           <Form.Group>
             <Form.Label>Username: </Form.Label>
             <Form.Control
               type="text"
               required
-              className="form-control"
               value={this.state.username}
               onChange={this.onChangeUsername}
             />
           </Form.Group>
           <Form.Group>
-              <Button type="submit">Create User</Button>
+            <Form.Label>Password: </Form.Label>
+            <Form.Control
+              type="password"
+              required
+            />
+          </Form.Group>
+          <Form.Group>
+              <Button type="submit">Login</Button>
           </Form.Group>
         </Form>
+        </Col>
+        </Row>
       </>
     )
   }
