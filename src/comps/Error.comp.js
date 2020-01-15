@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { FaTimesCircle } from 'react-icons/fa';
 export default class Error extends Component{
   constructor(props){
@@ -11,8 +11,9 @@ export default class Error extends Component{
   }
   render(){
     return (
-      <Alert variant="danger">Error!
+      <Alert variant="danger">
       <FaTimesCircle onClick={()=>this.close()}/>
+      Error!
       </Alert>
     )
   }

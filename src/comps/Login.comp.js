@@ -35,7 +35,7 @@ export default class Login extends Component{
         <Col sm={12} md={6}>
         <Form onSubmit={this.onSubmit}>
           <Form.Group>
-            <Form.Label>Username: </Form.Label>
+            <Form.Label>Name: </Form.Label>
             <Form.Control
               type="text"
               required

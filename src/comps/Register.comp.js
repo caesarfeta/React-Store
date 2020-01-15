@@ -4,28 +4,49 @@ import axios from 'axios';
 export default class Register extends Component{
   constructor(props){
     super(props);
-    this.onChangeUsername=this.onChangeUsername.bind(this);
+    this.onChangeName=this.onChangeName.bind(this);
+    this.onChangeEmail=this.onChangeEmail.bind(this);
+    this.onChangePassword=this.onChangePassword.bind(this);
+    this.onChangePassword2=this.onChangePassword2.bind(this);
     this.onSubmit=this.onSubmit.bind(this);
     this.state={
-      username:''
+      name:'',
+      email:'',
+      password:'',
+      password2:''
     }
   }
-  onChangeUsername(e){
+  onChangeName(e){
     this.setState({
-      username:e.target.value
+      name:e.target.value,
+    });
+  }
+  onChangeEmail(e){
+    this.setState({
+      email:e.target.value,
+    });
+  }
+  onChangePassword(e){
+    this.setState({
+      password:e.target.value,
+    });
+  }
+  onChangePassword2(e){
+    this.setState({
+      password2:e.target.value,
     });
   }
   onSubmit(e){
     e.preventDefault();
     const user={
-      username: this.state.username
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      password2: this.state.password
     };
     axios.post('http://localhost:3001/users/register',user)
       .then(res=>console.log(res.data))
       .catch(err=>console.log(err));
-    this.setState({
-      username:''
-    });
   }
   render(){
     return (
@@ -35,12 +56,12 @@ export default class Register extends Component{
         <Col sm={12} md={6}>
         <Form onSubmit={this.onSubmit}>
           <Form.Group>
-            <Form.Label>Username: </Form.Label>
+            <Form.Label>Name: </Form.Label>
             <Form.Control
               type="text"
               required
-              value={this.state.username}
-              onChange={this.onChangeUsername}
+              value={this.state.name}
+              onChange={this.onChangeName}
             />
           </Form.Group>
           <Form.Group>
@@ -48,6 +69,8 @@ export default class Register extends Component{
             <Form.Control
               type="email"
               required
+              value={this.state.email}
+              onChange={this.onChangeEmail}
             />
           </Form.Group>
           <Form.Group>
@@ -55,6 +78,8 @@ export default class Register extends Component{
             <Form.Control
               type="password"
               required
+              value={this.state.password}
+              onChange={this.onChangePassword}
             />
           </Form.Group>
           <Form.Group>
@@ -62,6 +87,8 @@ export default class Register extends Component{
             <Form.Control
               type="password"
               required
+              value={this.state.password2}
+              onChange={this.onChangePassword2}
             />
           </Form.Group>
           <Form.Group>
