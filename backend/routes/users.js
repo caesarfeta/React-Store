@@ -32,7 +32,7 @@ router.post("/register",(req,res)=>{
           newUser
             .save()
             .then(user => res.json(user))
-            .catch(err => console.log(err));
+            .catch(err => res.status(400).json(err));
         });
       });
     }
@@ -43,9 +43,9 @@ router.post("/register",(req,res)=>{
 // @desc Login user and return JWT token
 // @access Public
 router.post("/login", (req, res) => {
-  const { errors, isValid } = validateLoginInput(req.body);
+  const { err, isValid } = validateLoginInput(req.body);
   if (!isValid) {
-    return res.status(400).json(errors);
+    return res.status(400).json(err);
   }
   const email = req.body.email;
   const password = req.body.password;
@@ -72,7 +72,8 @@ router.post("/login", (req, res) => {
             });
           }
         );
-      } else {
+      }
+      else {
         return res
           .status(400)
           .json({ passwordincorrect: "Password incorrect" });

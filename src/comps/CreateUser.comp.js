@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form, Button } from 'react-bootstrap'
 import axios from 'axios';
 export default class CreateUser extends Component{
   constructor(props){
@@ -20,31 +21,33 @@ export default class CreateUser extends Component{
       username: this.state.username
     };
     console.log(user);
-    axios.post('http://localhost:3001/users/add',user)
-      .then(res=>console.log(res.data));
+    axios.post('http://localhost:3001/users/register',user)
+      .then(res=>console.log(res.data))
+      .catch(err=>console.log(err));
     this.setState({
       username:''
     });
   }
   render(){
     return (
-      <div>
-        <h3>CreateUser</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Username: </label>
-            <input type="text"
+      <>
+        <h2>Create User</h2>
+        <Form onSubmit={this.onSubmit}>
+          <Form.Group>
+            <Form.Label>Username: </Form.Label>
+            <Form.Control
+              type="text"
               required
               className="form-control"
               value={this.state.username}
               onChange={this.onChangeUsername}
             />
-          </div>
-          <div className="form-group">
-              <input type="submit" value="Create User" className="btn btn-primary" />
-          </div>
-        </form>
-      </div>
+          </Form.Group>
+          <Form.Group>
+              <Button type="submit">Create User</Button>
+          </Form.Group>
+        </Form>
+      </>
     )
   }
 }
