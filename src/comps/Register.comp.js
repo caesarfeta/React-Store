@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import axios from 'axios';
 export default class Register extends Component{
-  constructor(props){
-    super(props);
-    this.onChangeName=this.onChangeName.bind(this);
-    this.onChangeEmail=this.onChangeEmail.bind(this);
-    this.onChangePassword=this.onChangePassword.bind(this);
-    this.onChangePassword2=this.onChangePassword2.bind(this);
-    this.onSubmit=this.onSubmit.bind(this);
+  constructor(){
+    super();
     this.state={
       name:'',
       email:'',
@@ -16,27 +11,11 @@ export default class Register extends Component{
       password2:''
     }
   }
-  onChangeName(e){
-    this.setState({
-      name:e.target.value,
-    });
+  onChange = e => {
+    console.log( e )
+    this.setState({ [e.target.id]: e.target.value });
   }
-  onChangeEmail(e){
-    this.setState({
-      email:e.target.value,
-    });
-  }
-  onChangePassword(e){
-    this.setState({
-      password:e.target.value,
-    });
-  }
-  onChangePassword2(e){
-    this.setState({
-      password2:e.target.value,
-    });
-  }
-  onSubmit(e){
+  onSubmit = e => {
     e.preventDefault();
     const user={
       name: this.state.name,
@@ -60,8 +39,9 @@ export default class Register extends Component{
             <Form.Control
               type="text"
               required
+              id="name"
               value={this.state.name}
-              onChange={this.onChangeName}
+              onChange={this.onChange}
             />
           </Form.Group>
           <Form.Group>
@@ -69,8 +49,9 @@ export default class Register extends Component{
             <Form.Control
               type="email"
               required
+              id="email"
               value={this.state.email}
-              onChange={this.onChangeEmail}
+              onChange={this.onChange}
             />
           </Form.Group>
           <Form.Group>
@@ -78,8 +59,9 @@ export default class Register extends Component{
             <Form.Control
               type="password"
               required
+              id="password"
               value={this.state.password}
-              onChange={this.onChangePassword}
+              onChange={this.onChange}
             />
           </Form.Group>
           <Form.Group>
@@ -87,8 +69,9 @@ export default class Register extends Component{
             <Form.Control
               type="password"
               required
+              id="password2"
               value={this.state.password2}
-              onChange={this.onChangePassword2}
+              onChange={this.onChange}
             />
           </Form.Group>
           <Form.Group>
