@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { registerUser } from '../actions/auth';
+import classnames from 'classnames';
 import axios from 'axios';
-export default class Register extends Component{
+class Register extends Component{
   constructor(){
     super();
     this.state={
       email:'',
       password:'',
-      password2:''
+      password2:'',
+      errors:{}
+    }
+  }
+  componentWillReceiveProps(nextProps){
+    if (nextProps.erros){
+      this.setState({
+        errors: nextProps.errors
+      })
     }
   }
   onChange = e => {
@@ -20,9 +33,12 @@ export default class Register extends Component{
       password: this.state.password,
       password2: this.state.password
     };
+    this.props.registerUser( user, this.props.history );
+    /*
     axios.post('http://localhost:3001/users/register',user)
       .then(res=>console.log(res.data))
       .catch(err=>console.log(err));
+    */
   }
   render(){
     return (
@@ -39,6 +55,7 @@ export default class Register extends Component{
               id="email"
               value={this.state.email}
               onChange={this.onChange}
+              error={this.state.errors.email}
             />
           </Form.Group>
           <Form.Group>
@@ -49,6 +66,7 @@ export default class Register extends Component{
               id="password"
               value={this.state.password}
               onChange={this.onChange}
+              error={this.state.errors.password}
             />
           </Form.Group>
           <Form.Group>
@@ -59,6 +77,7 @@ export default class Register extends Component{
               id="password2"
               value={this.state.password2}
               onChange={this.onChange}
+              error={this.state.errors.password2}
             />
           </Form.Group>
           <Form.Group>
@@ -71,3 +90,16 @@ export default class Register extends Component{
     )
   }
 }
+Register.propTypes={
+  registerUser:PropTypes.func.isRequired,
+  auth:PropTypes.object.isRequired,
+  errors:PropTypes.object.isRequired
+}
+const mapStateToProps=state=>({
+  auth:state.auth,
+  errors:state.errors
+})
+export default connect(
+  mapStateToProps,
+  {registerUser}
+)(withRouter(Register))

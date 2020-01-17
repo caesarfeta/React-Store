@@ -22,7 +22,7 @@ export const loginUser=userData=>dispatch=>{
       const {token}=res.data;
       localStorage.setItem("jwtToken",token);
       setAuthToken(token);
-      const decode=jwt_decode(token);
+      const decoded=jwt_decode(token);
       dispatch(setCurrentUser(decoded));
     })
     .catch(err=>
