@@ -1,12 +1,7 @@
-import productReducer from './products';
-import cartReducer from './cart';
-import authReducer from './auth';
-import errorReducer from './error';
 import {combineReducers} from 'redux';
-const allReducers = combineReducers({
-  products: productReducer,
-  cart: cartReducer,
+import authReducer from './authReducer';
+import errorReducer from './errorReducer';
+export default combineReducers({
   auth: authReducer,
   error: errorReducer
 })
-export default allReducers
