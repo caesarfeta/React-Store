@@ -3,20 +3,16 @@ import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions/auth';
-class Dashboard extends Component{
-  onLogoutClick=e=>{
-    e.preventDefault();
-    this.props.logoutUser();
-  }
+class Purchased extends Component{
   render(){
     return (
       <Row>
-        <Col>Dashboard!</Col>
+        <Col>Purchased!</Col>
       </Row>
     )
   }
 }
-Dashboard.propTypes={
+Purchased.propTypes={
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 }
@@ -26,4 +22,4 @@ const mapStateToProps=state=>({
 export default connect(
   mapStateToProps,
   {logoutUser}
-)(Dashboard)
+)(Purchased)

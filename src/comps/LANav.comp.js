@@ -11,7 +11,8 @@ export default class LANav extends Component{
         <Nav>
           <Public><Nav.Link href="/register">Register</Nav.Link></Public>
           <Public><Nav.Link href="/login">Login</Nav.Link></Public>
-          <Private><Nav.Link href="/dashboard">Dashboard</Nav.Link></Private>
+          <Private><Nav.Link href="/purchased">Purchased</Nav.Link></Private>
+          <Nav.Link href="/shop">Shop</Nav.Link>
           <Logout/>
         </Nav>
       </Navbar>

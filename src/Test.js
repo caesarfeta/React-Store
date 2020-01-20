@@ -8,10 +8,11 @@ import store from './store';
 import { Container } from 'react-bootstrap' ;
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LANav from "./comps/LANav.comp";
+import PrivateRoute from "./comps/PrivateRoute.comp";
 import Register from "./comps/Register.comp";
 import Login from "./comps/Login.comp";
-import PrivateRoute from "./comps/PrivateRoute.comp";
-import Dashboard from "./comps/Dashboard.comp";
+import Purchased from "./comps/Purchased.comp";
+import Shop from "./comps/Shop.comp";
 if ( localStorage.jwtToken ){
   const token=localStorage.jwtToken;
   setAuthToken(token);
@@ -33,8 +34,9 @@ class App extends Component{
           <br/>
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
+          <Route path="/shop" component={Shop} />
           <Switch>
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/purchased" component={Purchased} />
           </Switch>
         </Container>
       </Router>
