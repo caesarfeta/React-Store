@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/auth';
