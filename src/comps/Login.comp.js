@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/auth';
@@ -42,6 +43,7 @@ class Login extends Component{
     const {errors}=this.state;
     return (
       <>
+        <p>Need an account? <a href="/register">Register</a></p>
         <Row>
         <Col sm={12} md={6}>
         <Form onSubmit={this.onSubmit}>

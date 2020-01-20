@@ -23,7 +23,7 @@ class Register extends Component{
   }
   componentDidMount(){
     if (this.props.auth.isAuthenticated){
-      this.props.history.push("/dashboard");
+      this.props.history.push("/shop");
     }
   }
   onChange = e => {
@@ -37,11 +37,6 @@ class Register extends Component{
       password2: this.state.password
     };
     this.props.registerUser( user, this.props.history );
-    /*
-    axios.post('http://localhost:3001/users/register',user)
-      .then(res=>console.log(res.data))
-      .catch(err=>console.log(err));
-    */
   }
   render(){
     const {errors}=this.state;
