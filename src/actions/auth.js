@@ -6,10 +6,9 @@ import {
   SET_CURRENT_USER,
   USER_LOADING
 } from "./types";
-require('dotenv').config()
-const URI=process.env.BACKEND_URI
+const PROXY = require('../../package.json').proxy;
 export const registerUser=(userData,history)=>dispatch=>{
-  axios.post(URI+"/users/register",userData)
+  axios.post(PROXY+"/users/register",userData)
     .then(res=>history.push("/login"))
     .catch(err=>
       dispatch({
@@ -19,7 +18,7 @@ export const registerUser=(userData,history)=>dispatch=>{
     )
 }
 export const loginUser=userData=>dispatch=>{
-  axios.post(URI+"/users/login",userData)
+  axios.post(PROXY+"/users/login",userData)
     .then(res=>{
       const {token}=res.data;
       localStorage.setItem("jwtToken",token);

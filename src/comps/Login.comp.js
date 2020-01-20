@@ -37,11 +37,6 @@ class Login extends Component{
       password: this.state.password
     };
     this.props.loginUser(user);
-    /*
-    axios.post('http://localhost:3001/users/login',user)
-      .then(res=>console.log(res.data))
-      .catch(err=>console.log(err));
-    */
   }
   render(){
     const {errors}=this.state;
