@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap'
-import axios from 'axios';
-export default class Login extends Component{
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../actions/auth';
+class Login extends Component{
   constructor(props){
     super(props);
     this.state={
       email:'',
-      password:''
+      password:'',
+      errors:{}
+    }
+  }
+  componentWillReceiveProps(nextProps){
+    if (nextProps.auth.isAuthenticated){
+      this.props.history.push('/dashboard');
+    }
+    if (nextProps.errors){
+      this.setState({
+        errors:nextProps.errors
+      })
+    }
+  }
+  componentDidMount(){
+    if (this.props.auth.isAuthenticated){
+      this.props.history.push("/dashboard");
     }
   }
   onChange = e => {
@@ -18,11 +36,15 @@ export default class Login extends Component{
       email: this.state.email,
       password: this.state.password
     };
+    this.props.loginUser(user);
+    /*
     axios.post('http://localhost:3001/users/login',user)
       .then(res=>console.log(res.data))
       .catch(err=>console.log(err));
+    */
   }
   render(){
+    const {errors}=this.state;
     return (
       <>
         <Row>
@@ -36,6 +58,7 @@ export default class Login extends Component{
               id="email"
               value={this.state.email}
               onChange={this.onChange}
+              isInvalid={errors.email||errors.emailnotfound}
             />
           </Form.Group>
           <Form.Group>
@@ -46,6 +69,7 @@ export default class Login extends Component{
               id="password"
               value={this.state.password}
               onChange={this.onChange}
+              isInvalid={errors.password||errors.passwordincorrect}
             />
           </Form.Group>
           <Form.Group>
@@ -58,3 +82,16 @@ export default class Login extends Component{
     )
   }
 }
+Login.propTypes={
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+const mapStateToProps=state=>({
+  auth: state.auth,
+  errors: state.errors
+})
+export default connect(
+  mapStateToProps,
+  {loginUser}
+)(Login)

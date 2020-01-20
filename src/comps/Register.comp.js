@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { registerUser } from '../actions/auth';
-import classnames from 'classnames';
-import axios from 'axios';
 class Register extends Component{
   constructor(){
     super();
@@ -21,6 +19,11 @@ class Register extends Component{
       this.setState({
         errors: nextProps.errors
       })
+    }
+  }
+  componentDidMount(){
+    if (this.props.auth.isAuthenticated){
+      this.props.history.push("/dashboard");
     }
   }
   onChange = e => {
@@ -41,6 +44,7 @@ class Register extends Component{
     */
   }
   render(){
+    const {errors}=this.state;
     return (
       <>
         <p>Already have an account? <a href="/login">Login</a></p>
@@ -55,7 +59,7 @@ class Register extends Component{
               id="email"
               value={this.state.email}
               onChange={this.onChange}
-              error={this.state.errors.email}
+              isInvalid={errors.email}
             />
           </Form.Group>
           <Form.Group>
@@ -66,7 +70,7 @@ class Register extends Component{
               id="password"
               value={this.state.password}
               onChange={this.onChange}
-              error={this.state.errors.password}
+              isInvalid={errors.password}
             />
           </Form.Group>
           <Form.Group>
@@ -77,7 +81,7 @@ class Register extends Component{
               id="password2"
               value={this.state.password2}
               onChange={this.onChange}
-              error={this.state.errors.password2}
+              isInvalid={errors.password2}
             />
           </Form.Group>
           <Form.Group>
@@ -93,7 +97,7 @@ class Register extends Component{
 Register.propTypes={
   registerUser:PropTypes.func.isRequired,
   auth:PropTypes.object.isRequired,
-  errors:PropTypes.object.isRequired
+  //errors:PropTypes.object.isRequired
 }
 const mapStateToProps=state=>({
   auth:state.auth,
