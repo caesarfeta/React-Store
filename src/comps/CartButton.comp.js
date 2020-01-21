@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Nav } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { useSelector,connect } from 'react-redux';
+import {
+  connect
+} from 'react-redux';
 import { Link } from 'react-router-dom';
 class CartButton extends Component{
   constructor(props){
@@ -14,7 +15,7 @@ class CartButton extends Component{
   render(){
     const cart=this.props.cart;
     if (cart.itms.length>0){
-      return <Link className="nav-link" to='/cart'>Cart {cart.itms.length}</Link>
+      return <Link className="nav-link" to='/cart'>Cart {cart.count}</Link>
     }
     return <></>
   }

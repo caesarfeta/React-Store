@@ -1,13 +1,35 @@
 import React, { Component } from 'react';
-import { Nav } from 'react-bootstrap';
+import {
+//  Nav,
+  Button
+} from 'react-bootstrap';
+//import { Link } from 'react-router-dom';
+//import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
-import { addToCart,rmFromCart,itmN,itmNValid } from '../actions';
-import { FaTimesCircle,FaTimes,FaPlus,FaShoppingCart,FaCartPlus } from 'react-icons/fa';
+import {
+  useDispatch
+} from 'react-redux';
+import {
+  rmFromCart,
+  itmN,
+  itmNValid,
+  buy
+} from '../actions';
+import {
+  FaTimesCircle,
+  FaTimes,
+  FaPlus,
+  FaShoppingCart,
+  FaCartPlus
+} from 'react-icons/fa';
+function BuyButton(){
+  const dispatch=useDispatch();
+  return <Button onClick={()=>dispatch(buy())}>Buy</Button>
+}
 function CartItem(p){
-  const dispatch = useDispatch();
+  const dispatch=useDispatch();
   return <tr>
     <td className="ar">
       { p.itm[0].name }
@@ -42,27 +64,31 @@ class Cart extends Component{
     var itms = _.map(cart.itms,function(itm,i){
       return <CartItem itm={itm} key={i}/>
     })
+    if (cart.count===0){
+      return <p>Nothing in cart!</p>
+    }
     return <>
-        <table>
-          <tbody>{ itms }</tbody>
-        </table>
-        <hr />
-        <table className="fr">
-          <tbody>
-          <tr>
-            <td className="ar">Subtotal</td>
-            <td className="ar">${(cart.subtotal).toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td className="ar">Tax @ {(cart.taxrate*100).toFixed(1)+"%"}</td>
-            <td className="ar"><FaPlus className="fade"/>${(cart.tax).toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td className="ar">Total</td><td className="bold ar">${(cart.total).toFixed(2)}
-            </td>
-          </tr>
+      <table>
+        <tbody>{ itms }</tbody>
+      </table>
+      <hr />
+      <table className="fr">
+        <tbody>
+        <tr>
+          <td className="ar">Subtotal</td>
+          <td className="ar">${(cart.subtotal).toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td className="ar">Tax @ {(cart.taxrate*100).toFixed(1)+"%"}</td>
+          <td className="ar"><FaPlus className="fade"/>${(cart.tax).toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td className="ar">Total</td><td className="bold ar">${(cart.total).toFixed(2)}
+          </td>
+        </tr>
         </tbody>
       </table>
+      <BuyButton />
     </>
   }
 }

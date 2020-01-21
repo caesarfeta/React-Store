@@ -9,7 +9,7 @@ export default class LANav extends Component{
   render(){
     return (
       <Navbar bg="primary">
-        <Navbar.Brand href="/">LAPLASTX</Navbar.Brand>
+        <Link className="navbar-brand" to="/">LAPLASTX</Link>
         <Nav>
           <Public><Link className="nav-link" to="/register">Register</Link></Public>
           <Public><Link className="nav-link" to="/login">Login</Link></Public>

@@ -9,10 +9,7 @@ import {
 import _ from 'lodash';
 import {FaCartPlus} from 'react-icons/fa';
 import {
-  addToCart,
-  rmFromCart,
-  itmN,
-  itmNValid
+  addToCart
 } from '../actions';
 import {
   Row,
@@ -28,10 +25,10 @@ function Prod(p){
   return <>
   <Jumbotron>
     <Row>
-      <Col><img src={p.itm.logo}/></Col>
+      <Col><img alt="logo" src={p.itm.logo}/></Col>
     </Row>
     <Row>
-      <Col><img src={p.itm.splash}/></Col>
+      <Col><img alt="splash" src={p.itm.splash}/></Col>
     </Row>
     <Row>
       <Col>
@@ -44,7 +41,7 @@ function Prod(p){
             Add <FaCartPlus />
         </Button>
       </Col>
-      <Col><img className="fig" src={p.itm.figure}/></Col>
+      <Col><img alt="figure" className="fig" src={p.itm.figure}/></Col>
     </Row>
     <Row>
       <Col>Designer: {p.itm.designer} | Released: {p.itm.released}</Col>

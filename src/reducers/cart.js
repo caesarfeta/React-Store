@@ -5,6 +5,9 @@ function calcRest( state ){
   ));
   state.tax=state.subtotal*state.taxrate;
   state.total=state.subtotal+state.tax;
+  state.count=_.sum( _.map(state.itms,
+    function(o){ return Number(o[1]) }
+  ));
 }
 const cartReducer = (state={
     itms:[],
@@ -12,6 +15,7 @@ const cartReducer = (state={
     tax: 0,
     taxrate:.072,
     total: 0,
+    count: 0,
     visible:false
   },action) => {
   switch (action.type){
@@ -51,6 +55,9 @@ const cartReducer = (state={
       }
       calcRest( state )
       return _.clone( state )
+    case "BUY":
+      console.log('buy!');
+      return state
     default:
       return state
   }
