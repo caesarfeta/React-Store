@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 const passport = require("passport");
 const users = require("./routes/users");
+const cart = require("./routes/cart");
 
 // DB connection
 const app = express();
@@ -28,9 +29,11 @@ app.use("./routes/users", users);
 const exercisesRouter = require('./routes/exercises');
 const usersRouter = require('./routes/users');
 const downloadRouter = require('./routes/download');
+const cartRouter = require('./routes/cart');
 app.use( '/exercises', exercisesRouter );
 app.use( '/users', usersRouter );
 app.use( '/download', downloadRouter );
+app.use( '/cart', cartRouter );
 app.listen(port,()=>{
   console.log(`Running on: ${port}`);
 });

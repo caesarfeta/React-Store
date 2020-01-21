@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import {
-//  Nav,
   Button
 } from 'react-bootstrap';
-//import { Link } from 'react-router-dom';
-//import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import {
-  useDispatch
+  useDispatch,
+  useSelector
 } from 'react-redux';
 import {
   rmFromCart,
@@ -26,7 +24,8 @@ import {
 } from 'react-icons/fa';
 function BuyButton(){
   const dispatch=useDispatch();
-  return <Button onClick={()=>dispatch(buy())}>Buy</Button>
+  const cart = useSelector(state=>state.cart)
+  return <Button onClick={()=>dispatch(buy(cart))}>Buy</Button>
 }
 function CartItem(p){
   const dispatch=useDispatch();
