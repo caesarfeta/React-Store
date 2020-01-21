@@ -1,3 +1,5 @@
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom' ;
 import jwt_decode from 'jwt-decode';
@@ -6,7 +8,6 @@ import { setCurrentUser, logoutUser } from './actions/auth';
 import { Provider } from 'react-redux';
 import store from './store';
 import { Container } from 'react-bootstrap' ;
-import 'bootstrap/dist/css/bootstrap.min.css';
 import LANav from "./comps/LANav.comp";
 import PrivateRoute from "./comps/PrivateRoute.comp";
 import Register from "./comps/Register.comp";
