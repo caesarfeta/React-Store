@@ -2,33 +2,78 @@ import React, { Component } from 'react';
 import { Nav } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useSelector } from 'react-redux';
+import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart,rmFromCart,itmN,itmNValid } from '../actions';
+import { FaTimesCircle,FaTimes,FaPlus,FaShoppingCart,FaCartPlus } from 'react-icons/fa';
+function CartItem(p){
+  const dispatch = useDispatch();
+  return <tr>
+    <td className="ar">
+      { p.itm[0].name }
+      <FaTimes/>
+      <input type="number"
+              min="1"
+              max={p.itm[0].max_quant}
+            value={p.itm[1]}
+         onChange={e=>dispatch(itmN([p.itm,e.target.value]))}
+           onBlur={e=>dispatch(itmNValid([p.itm,e.target.value]))}
+        />
+    </td>
+    <td className="ar">
+      ${(p.itm[0].cart_price*p.itm[1]).toFixed(2)}
+    </td>
+    <td>
+      <FaTimesCircle className="red" onClick={()=>dispatch(rmFromCart(p.itm))}/>
+    </td>
+  </tr>
+}
 class Cart extends Component{
   constructor(props){
     super(props);
     this.state={
       auth:'',
-      cart: ''
+      cart:'',
+      products:''
     }
   }
-  onLogoutClick=e=>{
-    e.preventDefault();
-    this.props.logoutUser();
-  };
   render(){
     const cart=this.props.cart;
-    if (cart.itms.length>0){
-      return <Nav.Link>Cart {cart.itms.length}</Nav.Link>
-    }
-    return <></>
+    var itms = _.map(cart.itms,function(itm,i){
+      return <CartItem itm={itm} key={i}/>
+    })
+    return <>
+        <table>
+          <tbody>{ itms }</tbody>
+        </table>
+        <hr />
+        <table className="fr">
+          <tbody>
+          <tr>
+            <td className="ar">Subtotal</td>
+            <td className="ar">${(cart.subtotal).toFixed(2)}</td>
+          </tr>
+          <tr>
+            <td className="ar">Tax @ {(cart.taxrate*100).toFixed(1)+"%"}</td>
+            <td className="ar"><FaPlus className="fade"/>${(cart.tax).toFixed(2)}</td>
+          </tr>
+          <tr>
+            <td className="ar">Total</td><td className="bold ar">${(cart.total).toFixed(2)}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </>
   }
 }
 Cart.propTypes={
   auth: PropTypes.object.isRequired,
-  cart: PropTypes.object.isRequired
+  cart: PropTypes.object.isRequired,
+  products: PropTypes.array.isRequired
 }
 const mapStateToProps=state=>({
   auth: state.auth,
-  cart: state.cart
+  cart: state.cart,
+  products: state.products
 })
 export default connect(mapStateToProps)(Cart)

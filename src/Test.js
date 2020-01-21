@@ -14,6 +14,7 @@ import Register from "./comps/Register.comp";
 import Login from "./comps/Login.comp";
 import Purchased from "./comps/Purchased.comp";
 import Shop from "./comps/Shop.comp";
+import Cart from "./comps/Cart.comp";
 if ( localStorage.jwtToken ){
   const token=localStorage.jwtToken;
   setAuthToken(token);
@@ -33,10 +34,11 @@ class App extends Component{
         <Container>
           <LANav/>
           <br/>
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
-          <Route path="/shop" component={Shop} />
           <Switch>
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+            <Route path="/shop" component={Shop} />
+            <Route path="/cart" component={Cart} />
             <PrivateRoute exact path="/purchased" component={Purchased} />
           </Switch>
         </Container>

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import { connect } from 'react-redux';
 import {
   useSelector,
   useDispatch
@@ -13,14 +15,10 @@ import {
   itmNValid
 } from '../actions';
 import {
-  Container,
   Row,
   Col,
   Jumbotron,
-  Alert,
-  Button,
-  Modal,
-  Navbar
+  Button
 } from 'react-bootstrap';
 function Prod(p){
   const cart = useSelector(state=>state.cart);
@@ -54,10 +52,30 @@ function Prod(p){
   </Jumbotron>
   </>
 }
-function Shop(){
-  const prods = _.map( useSelector(state=>state.products),function(itm){
-    return <Prod itm={itm} key={itm.id}/>
-  })
-  return <>{prods}</>
+class Shop extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      auth:'',
+      cart:'',
+      products:''
+    }
+  }
+  render(){
+    const prods = _.map(this.props.products,function(itm){
+      return <Prod itm={itm} key={itm.id}/>
+    })
+    return <>{prods}</>
+  }
 }
-export default Shop;
+Shop.propTypes={
+  auth: PropTypes.object.isRequired,
+  cart: PropTypes.object.isRequired,
+  products: PropTypes.array.isRequired
+}
+const mapStateToProps=state=>({
+  auth: state.auth,
+  cart: state.cart,
+  products: state.products
+})
+export default connect(mapStateToProps)(Shop)
