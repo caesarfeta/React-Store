@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import {
   Button
 } from 'react-bootstrap';
@@ -22,8 +23,15 @@ import {
 } from 'react-icons/fa';
 function BuyButton(){
   const dispatch=useDispatch();
-  const cart = useSelector(state=>state.cart)
-  return <Button onClick={()=>dispatch(buy(cart))}>Buy</Button>
+  const cart=useSelector(state=>state.cart)
+  const auth=useSelector(state=>state.auth)
+  if (auth.isAuthenticated){
+    return <Button onClick={()=>dispatch(buy(cart))}>Buy</Button>
+  }
+  return <>
+  <Button disabled>Buy</Button>
+  <span>You must login before buying!</span>
+  </>
 }
 function CartItem(p){
   const dispatch=useDispatch();
@@ -61,10 +69,8 @@ class Cart extends Component{
     var itms = _.map(cart.itms,function(itm,i){
       return <CartItem itm={itm} key={i}/>
     })
-    if (cart.count===0){
-      return <p>Nothing in cart!</p>
-    }
     return <>
+      {(cart.count===0) && <p>Nothing in cart!</p>}
       <table>
         <tbody>{ itms }</tbody>
       </table>
