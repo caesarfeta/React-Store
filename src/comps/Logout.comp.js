@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Nav } from 'react-bootstrap';
+import {
+  Nav,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions/auth';
@@ -19,7 +23,18 @@ class Logout extends Component{
   };
   render(){
     if (this.props.auth.isAuthenticated){
-      return <Nav.Link onClick={this.onLogoutClick}><FaSignOutAlt/></Nav.Link>
+      return <>
+      <OverlayTrigger
+        placement="right"
+        overlay={
+          <Tooltip
+            id="tooltip-signout">
+            Logout
+          </Tooltip>
+        }>
+          <Nav.Link onClick={this.onLogoutClick}><FaSignOutAlt/></Nav.Link>
+      </OverlayTrigger>
+      </>
     }
     return <></>
   }

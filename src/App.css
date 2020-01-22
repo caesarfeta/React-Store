@@ -61,7 +61,7 @@ img.fig {
   color: red;
   cursor: pointer;
 }
-.gray {
+.gray, .fade {
   color: gray;
 }
 .hidden {
@@ -99,4 +99,7 @@ button:disabled {
 }
 .counter.nudge {
   left: .25rem;
+}
+.clearfix {
+  overflow: auto;
 }
