@@ -52,7 +52,10 @@ function Prod(p){
     </Row>
     <Row>
       <Col align="center">
-        <div className="blurb">Designer: {p.itm.designer} | Released: {p.itm.released}</div>
+        <div className="blurb">
+          <span className="gray">Designer:</span> {p.itm.designer} 
+          <span className="gray"> | Released:</span> {p.itm.released}
+        </div>
       </Col>
     </Row>
   </Jumbotron>

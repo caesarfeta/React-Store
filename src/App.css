@@ -61,6 +61,9 @@ img.fig {
   color: red;
   cursor: pointer;
 }
+.gray {
+  color: gray;
+}
 .hidden {
   visibility: hidden !important;
 }

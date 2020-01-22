@@ -4,6 +4,9 @@ import {
   connect
 } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {
+  FaShoppingCart
+} from 'react-icons/fa';
 class CartButton extends Component{
   constructor(props){
     super(props);
@@ -15,7 +18,7 @@ class CartButton extends Component{
   render(){
     const cart=this.props.cart;
     if (cart.itms.length>0){
-      return <Link className="nav-link" to='/cart'>Cart<span className="counter nudge">{cart.count}</span></Link>
+      return <Link className="nav-link" to='/cart'><FaShoppingCart/><span className="counter nudge">{cart.count}</span></Link>
     }
     return <></>
   }
