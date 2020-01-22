@@ -56,7 +56,6 @@ const cartReducer = (state={
       calcRest( state )
       return _.clone( state )
     case "BUY":
-      console.log('buy!');
       return state
     default:
       return state

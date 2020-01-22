@@ -1,10 +1,11 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+router.use(require('../tokenChecker'))
 router.post("/buy",(req,res)=>{
-  res.json({
+  return res.json({
     success: true,
-    msg: 'buy'
-  });
+    message: 'buy'
+  })
 });
-module.exports = router;
+module.exports=router;

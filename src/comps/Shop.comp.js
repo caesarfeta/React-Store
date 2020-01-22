@@ -17,6 +17,12 @@ import {
   Jumbotron,
   Button
 } from 'react-bootstrap';
+function Price(p){
+  return <div className="price">
+    <span className={ p.itm.sale_price!=null?"strike":"" }>${ p.itm.price }</span>
+    <span className={ p.itm.sale_price === null ? "fade":"" }>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" || "None" }</span>
+  </div>
+}
 function Prod(p){
   const cart = useSelector(state=>state.cart);
   const dispatch = useDispatch();
@@ -32,19 +38,22 @@ function Prod(p){
     </Row>
     <Row>
       <Col>
-        <ReactMarkdown source={p.itm.copy} />
-        <span className={ p.itm.sale_price!=null?"strike":"" }>${ p.itm.price }</span>
-        <span className={ p.itm.sale_price === null ? "fade":"" }>{ !!p.itm.sale_price?"$"+p.itm.sale_price:"" || "None" }</span>
+        <ReactMarkdown className="blurb" source={p.itm.copy} />
+        <Price itm={p.itm} />
+        <br />
         <Button 
           disabled={ disable }
           onClick={()=>dispatch(addToCart(p.itm))}>
             Add <FaCartPlus />
         </Button>
+        {cartItm && <span className="counter">{(cartItm)?cartItm[1]:null}</span>}
       </Col>
       <Col><img alt="figure" className="fig" src={p.itm.figure}/></Col>
     </Row>
     <Row>
-      <Col>Designer: {p.itm.designer} | Released: {p.itm.released}</Col>
+      <Col align="center">
+        <div className="blurb">Designer: {p.itm.designer} | Released: {p.itm.released}</div>
+      </Col>
     </Row>
   </Jumbotron>
   </>

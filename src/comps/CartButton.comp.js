@@ -15,7 +15,7 @@ class CartButton extends Component{
   render(){
     const cart=this.props.cart;
     if (cart.itms.length>0){
-      return <Link className="nav-link" to='/cart'>Cart {cart.count}</Link>
+      return <Link className="nav-link" to='/cart'>Cart<span className="counter nudge">{cart.count}</span></Link>
     }
     return <></>
   }

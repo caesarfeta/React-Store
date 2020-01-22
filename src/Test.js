@@ -1,4 +1,3 @@
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom' ;
@@ -15,6 +14,8 @@ import Login from "./comps/Login.comp";
 import Purchased from "./comps/Purchased.comp";
 import Shop from "./comps/Shop.comp";
 import Cart from "./comps/Cart.comp";
+import Welcome from "./comps/Welcome.comp";
+import './App.css';
 if ( localStorage.jwtToken ){
   const token=localStorage.jwtToken;
   setAuthToken(token);
@@ -35,6 +36,7 @@ class App extends Component{
           <LANav/>
           <br/>
           <Switch>
+            <Route exact path="/" component={Welcome} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <Route path="/shop" component={Shop} />

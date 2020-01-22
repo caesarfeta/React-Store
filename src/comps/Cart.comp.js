@@ -18,9 +18,7 @@ import {
 import {
   FaTimesCircle,
   FaTimes,
-  FaPlus,
-  FaShoppingCart,
-  FaCartPlus
+  FaPlus
 } from 'react-icons/fa';
 function BuyButton(){
   const dispatch=useDispatch();
