@@ -12,6 +12,9 @@ const userSchema = new Schema({
   date:{
     type: Date,
     default: Date.now
+  },
+  purchased:{
+    type: Array
   }
 },{
   timestamps: true

@@ -27,19 +27,10 @@ export const itmNValid=itm=>{
     payload: itm
   }
 }
-export const buy=(cart,history)=>dispatch=>{
-  axios.post(PROXY+"/cart/buy",cart)
+export const buy=(json,history)=>dispatch=>{
+  axios.post(PROXY+"/cart/buy",json)
     .then(function(){console.log('success')})
     .catch(function(e){
       console.log(e);
     })
-  /*
-    .then(res=>history.push("/purchased"))
-    .catch(err=>
-      dispatch({
-        type:GET_ERRORS,
-        payload: err
-      })
-    )
-  */
 }

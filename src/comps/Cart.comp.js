@@ -28,7 +28,7 @@ function BuyButton(){
   const cart=useSelector(state=>state.cart)
   const auth=useSelector(state=>state.auth)
   if (auth.isAuthenticated){
-    return <Button size="lg" onClick={()=>dispatch(buy(cart))}>Buy</Button>
+    return <Button size="lg" onClick={()=>dispatch(buy({itms:cart.itms,id:auth.user.id}))}>Buy</Button>
   }
   return <>
   <Button size="lg" disabled>Buy</Button>
